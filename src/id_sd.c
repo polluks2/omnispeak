@@ -34,6 +34,9 @@ SD_Backend *SD_Impl_GetBackend_ALSAOPL2();
 #ifdef SD_OPL2_WITH_IEEE1284
 SD_Backend *SD_Impl_GetBackend_OPL2LPT();
 #endif
+#ifdef SD_OPL2_WITH_LIBOPLHW
+SD_Backend *SD_Impl_GetBackend_OPLHW();
+#endif
 
 // Global variables accessed from other modules
 bool sd_haveAdlib;
@@ -544,6 +547,10 @@ void SD_Startup()
 	if (!CK_Cross_strcasecmp(backendName, "opl2lpt"))
 		sd_backend = SD_Impl_GetBackend_OPL2LPT();
 #endif
+#ifdef SD_OPL2_WITH_LIBOPLHW
+	if (!CK_Cross_strcasecmp(backendName, "liboplhw"))
+		sd_backend = SD_Impl_GetBackend_OPLHW();
+#endif
 
 	for (int i = 0; i < us_argc; ++i)
 	{
@@ -554,6 +561,10 @@ void SD_Startup()
 #ifdef SD_OPL2_WITH_IEEE1284
 		if (!CK_Cross_strcasecmp(us_argv[i], "/OPL2LPT"))
 			sd_backend = SD_Impl_GetBackend_OPL2LPT();
+#endif
+#ifdef SD_OPL2_WITH_LIBOPLHW
+		if (!CK_Cross_strcasecmp(us_argv[i], "/OPLHW"))
+			sd_backend = SD_Impl_GetBackend_OPLHW();
 #endif
 	}
 
